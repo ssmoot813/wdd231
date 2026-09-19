@@ -4,6 +4,10 @@
 
 Use this as a starting point to complete the WDD 231 personal activity. We will be pulling data from the National Parks API and building a website for the park of your choice with it.
 
+## Live Site
+
+https://unique-pudding-6aff13.netlify.app
+
 ## Prerequisites
 
 - You must have Node installed. visit https://byui-cit.github.io/learning-modules/modules/general/node-installation/ for instructions
