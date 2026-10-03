@@ -1,0 +1,31 @@
+/* Intro */
+.intro {
+    padding: 1.5rem 1rem 0.5rem;
+}
+
+.intro h1 {
+    font-family: var(--bs-font-serif);
+    font-weight: normal;
+    font-size: 2rem;
+    color: var(--bs-black);
+    margin: 0 0 1rem;
+}
+
+.intro p {
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Info cards layout */
+.info {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem 1rem 2rem;
+}
+
+@media (min-width: 700px) {
+    .info {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
