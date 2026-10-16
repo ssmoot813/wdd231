@@ -22,3 +22,19 @@ svg {
     height: 24px;
     vertical-align: middle;
 }
+
+.alert-information {
+    color: var(--alert-information);
+}
+
+.alert-danger {
+    color: var(--alert-danger);
+}
+
+.alert-closure {
+    color: var(--alert-closure);
+}
+
+.alert-caution {
+    color: var(--alert-caution);
+}

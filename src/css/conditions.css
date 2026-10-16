@@ -1,0 +1,84 @@
+/* alerts */
+.alerts>ul {
+    list-style: none;
+    padding: 0;
+}
+
+.alert {
+    margin: 0.5rem;
+    padding: 0.5rem 0 0.8rem 0;
+    display: flex;
+    gap: 1em;
+    border-bottom: 1px solid var(--bs-grey-3);
+}
+
+.alert h3 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.alert p {
+    margin: 0;
+}
+
+.alert svg {
+    height: 30px;
+    width: 30px;
+    margin: 0.25em;
+    flex: 0 0 auto;
+}
+
+details {
+    border: 1px solid var(--bs-grey-3);
+    margin: 0.5rem 0;
+}
+
+summary {
+    padding: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+summary::-webkit-details-marker {
+    display: none;
+}
+
+summary::after {
+    content: "";
+    width: 1.2em;
+    height: 1.2em;
+    background: url("https://byui-cse.github.io/wdd231-course/images/arrow.svg") no-repeat center / contain;
+    transition: transform 0.2s;
+}
+
+details[open]>summary::after {
+    transform: rotate(180deg);
+}
+
+details ul {
+    list-style: none;
+    padding: 0 1rem;
+}
+
+.visitor-center {
+    border-top: 1px solid var(--bs-grey-3);
+    padding: 0.5rem 0;
+}
+
+.visitor-center h4 {
+    margin: 0.5rem 0;
+}
+
+.activities ul {
+    columns: 2;
+}
+
+@media (min-width: 700px) {
+    .activities ul {
+        columns: 3;
+    }
+}
