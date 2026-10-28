@@ -26,6 +26,7 @@
     background-color: var(--bs-black);
     color: var(--bs-white);
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     padding: 0.5em 1em;
@@ -53,9 +54,51 @@
     cursor: pointer;
 }
 
-/* Hide the nav dropdown for now */
+/* Global nav (main menu) */
 .global-nav {
+    width: 100%;
+    border-top: 1px solid #333;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+}
+
+.global-nav.show {
+    max-height: 1000px;
+}
+
+.global-nav button {
+    background-color: transparent;
+    border: 0;
+    padding: 1rem;
+    cursor: pointer;
+}
+
+.global-nav svg {
+    --icon-color: white;
+}
+
+/* Menu / Close label swap */
+.global-nav__toggle--closed,
+.global-nav__toggle--open {
+    align-items: center;
+    gap: 0.3em;
+}
+
+.global-nav__toggle--closed {
+    display: flex;
+}
+
+.global-nav__toggle--open {
     display: none;
+}
+
+.global-nav__toggle[aria-expanded="true"]>.global-nav__toggle--closed {
+    display: none;
+}
+
+.global-nav__toggle[aria-expanded="true"]>.global-nav__toggle--open {
+    display: flex;
 }
 
 /* Disclaimer */
@@ -105,7 +148,6 @@
     margin-right: 0.75em;
 }
 
-/* Info/alert/maps/calendar/fees bar */
 .park-nav ul {
     list-style: none;
     margin: 0;
