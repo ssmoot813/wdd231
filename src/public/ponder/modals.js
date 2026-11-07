@@ -1,0 +1,32 @@
+// modals.js
+
+const modal = document.querySelector("#modal");
+const openModalButton = document.querySelector("#open-modal");
+const closeModalButton = document.querySelector(".close-button");
+
+function openModal() {
+    modal.classList.add("open");
+    modal.setAttribute("aria-hidden", "false");
+}
+
+function closeModal() {
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden", "true");
+}
+
+openModalButton.addEventListener("click", openModal);
+closeModalButton.addEventListener("click", closeModal);
+
+// Close when clicking the dark overlay (outside .modal-content)
+window.addEventListener("click", (event) => {
+    if (event.target === modal) {
+        closeModal();
+    }
+});
+
+// Close with the Escape key
+window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+        closeModal();
+    }
+});
