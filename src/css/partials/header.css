@@ -64,7 +64,7 @@
 }
 
 .global-nav.show {
-    max-height: 1000px;
+    max-height: 2000px;
 }
 
 .global-nav button {
@@ -76,6 +76,137 @@
 
 .global-nav svg {
     --icon-color: white;
+}
+
+.global-nav a {
+    color: var(--bs-white);
+    text-decoration: none;
+}
+
+.global-nav__section-heading {
+    margin: 0;
+    padding: 1rem 0.625rem;
+    font-size: 1.25rem;
+}
+
+.section-heading--green {
+    color: var(--bs-light-green);
+}
+
+.section-heading--blue {
+    color: var(--bs-chathams-blue-3);
+}
+
+.global-nav__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid #444;
+}
+
+.global-nav__list > li {
+    border-bottom: 1px solid #444;
+}
+
+/* Split button: wide link + square toggle */
+.global-nav__split-button {
+    display: flex;
+    background-color: var(--bs-gray-800);
+}
+
+.global-nav__split-button > a {
+    flex: 1;
+    align-self: center;
+    padding: 1rem 0.625rem;
+}
+
+.global-nav__split-button > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 1.25rem;
+    border-left: 1px solid #444;
+}
+
+.global-nav__split-button > a:hover,
+.global-nav__split-button > button:hover {
+    background-color: var(--bs-gray-900);
+}
+
+.global-nav__split-button__toggle .icon {
+    transition: transform 0.3s ease;
+}
+
+.global-nav__split-button__toggle .icon.rotate {
+    transform: rotate(180deg);
+}
+
+/* Submenus: hidden until toggled, slide open */
+.global-nav__submenu {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 1rem;
+    font-size: 0.85em;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+}
+
+.global-nav__submenu.show {
+    max-height: 400px;
+}
+
+.global-nav__submenu a {
+    display: block;
+    padding: 0.75rem 0.625rem;
+}
+
+.global-nav a:hover {
+    text-decoration: underline;
+}
+
+/* Wide screens: hide park section, show all submenus in columns */
+@media (width >= 768px) {
+    .global-nav > h2,
+    .global-nav__list:first-of-type {
+        display: none;
+    }
+
+    .global-nav__list {
+        display: flex;
+        justify-content: space-around;
+        border-top: 0;
+        padding: 1rem 0;
+    }
+
+    .global-nav__list > li {
+        border-bottom: 0;
+    }
+
+    .global-nav__split-button {
+        background-color: inherit;
+    }
+
+    .global-nav__split-button > a {
+        font-weight: bold;
+    }
+
+    .global-nav__split-button > a:hover {
+        background-color: inherit;
+    }
+
+    .global-nav__split-button > button {
+        display: none;
+    }
+
+    .global-nav__submenu {
+        max-height: fit-content;
+        padding-left: 0;
+    }
+
+    .global-nav__submenu a {
+        padding: 0.5rem 0.625rem;
+    }
 }
 
 /* Menu / Close label swap */

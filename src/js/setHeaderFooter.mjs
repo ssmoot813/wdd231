@@ -1,3 +1,4 @@
+import enableNavigation from "./navigation.mjs";
 import { parkInfoTemplate, footerTemplate } from "./templates.mjs";
 
 function setHeaderInfo(data) {
@@ -27,4 +28,5 @@ function setFooter(data) {
 export default function setHeaderFooter(data) {
     setHeaderInfo(data);
     setFooter(data);
+    enableNavigation();
 }
