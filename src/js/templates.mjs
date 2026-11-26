@@ -94,7 +94,7 @@ export function vcInfoTemplate(data) {
         <figcaption>${image.caption} <span>${image.credit}</span></figcaption>
       </figure>`
     : "";
-  return `${figure}<p>${data.description}</p>`;
+  return `${figure}<p>${cleanText(data.description)}</p>`;
 }
 
 export function listTemplate(data, contentTemplate) {
@@ -126,15 +126,40 @@ export function vcAmenityTemplate(data) {
   return `<li>${data}</li>`;
 }
 
+// ---------- regex helpers for cleaning API data ----------
+
+// turn any phone format into "(307) 344-2550"; returns null if it isn't a 10-digit US number
+function parsePhone(phone) {
+  const digits = phone.replace(/\D/g, "");
+  const match = digits.match(/^1?(\d{3})(\d{3})(\d{4})$/);
+  if (!match) return null;
+  const [, area, prefix, line] = match;
+  return {
+    display: `(${area}) ${prefix}-${line}`,
+    link: `tel:+1${area}${prefix}${line}`
+  };
+}
+
+// basic email check: word characters before and after the @, with at least one dot in the domain
+function isValidEmail(email) {
+  return /^[\w.+-]+@[\w-]+(\.[\w-]+)+$/.test(email);
+}
+
+// collapse extra spaces, tabs and line breaks from API text into single spaces
+function cleanText(text) {
+  return text.replace(/\s+/g, " ").trim();
+}
+
 export function vcDirectionsTemplate(data) {
-  return `<p>${data}</p>`;
+  return `<p>${cleanText(data)}</p>`;
 }
 
 export function vcContactsTemplate(data) {
   const email = data.emailAddresses?.[0]?.emailAddress;
-  const phone = data.phoneNumbers?.[0]?.phoneNumber;
+  const rawPhone = data.phoneNumbers?.[0]?.phoneNumber;
+  const phone = rawPhone ? parsePhone(rawPhone) : null;
   let html = "";
-  if (email) {
+  if (email && isValidEmail(email)) {
     html += `<section class="vc-contact__email">
       <h3>Email Address</h3>
       <a href="mailto:${email}">Send this visitor center an email</a>
@@ -143,7 +168,12 @@ export function vcContactsTemplate(data) {
   if (phone) {
     html += `<section class="vc-contact__phone">
       <h3>Phone numbers</h3>
-      <a href="tel:+1${phone.replace(/\D/g, "")}">${phone}</a>
+      <a href="${phone.link}">${phone.display}</a>
+    </section>`;
+  } else if (rawPhone) {
+    html += `<section class="vc-contact__phone">
+      <h3>Phone numbers</h3>
+      <p>${rawPhone}</p>
     </section>`;
   }
   return html || "<p>No contact information listed.</p>";
