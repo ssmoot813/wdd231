@@ -14,6 +14,7 @@ export default defineConfig({
         main: resolve(__dirname, "src/index.html"),
         conditions: resolve(__dirname, "src/conditions.html"),
         progressive: resolve(__dirname, "src/progressive.html"),
+        visitorCenter: resolve(__dirname, "src/visitor-center.html"),
       }
     }
   }

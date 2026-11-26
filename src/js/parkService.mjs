@@ -30,7 +30,7 @@ async function getJson(url) {
       "X-Api-Key": apiKey
     }
   };
-  let data = {};
+  let data;
   const response = await fetch(baseUrl + url, options);
   if (response.ok) {
     data = await response.json();
@@ -59,4 +59,10 @@ export async function getParkAlerts(code) {
 export async function getVisitorCenterData(code) {
   const data = await getJson(`visitorcenters?parkCode=${code}`);
   return data.data;
+}
+
+export async function getParkVisitorCenterDetails(id) {
+  // "id" is not in the NPS docs for this endpoint, but it works
+  const data = await getJson(`visitorcenters?id=${id}`);
+  return data.data[0];
 }

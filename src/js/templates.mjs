@@ -42,7 +42,7 @@ export function footerTemplate(info) {
 }
 
 export function alertTemplate(alert) {
-  let alertType = "";
+  let alertType;
   switch (alert.category) {
     case "Park Closure":
       alertType = "closure";
@@ -64,7 +64,7 @@ export function alertTemplate(alert) {
 
 export function visitorCenterTemplate(center) {
   return `<li class="visitor-center">
-    <h4>${center.name}</h4>
+    <h4><a href="visitor-center.html?id=${center.id}">${center.name}</a></h4>
     <p>${center.description}</p>
     <p>${center.directionsInfo}</p>
   </li>`;
@@ -72,4 +72,134 @@ export function visitorCenterTemplate(center) {
 
 export function activityListTemplate(activities) {
   return activities.map((activity) => `<li>${activity.name}</li>`).join("");
+}
+
+// ---------- visitor center page ----------
+
+export function iconTemplate(iconId) {
+  return `<svg class="icon" role="presentation" focusable="false">
+    <use xlink:href="/images/sprite.symbol.svg#${iconId}"></use>
+  </svg>`;
+}
+
+export function vcTitleTemplate(text) {
+  return `${iconTemplate("ranger-station")} ${text}`;
+}
+
+export function vcInfoTemplate(data) {
+  const image = data.images[0];
+  const figure = image
+    ? `<figure>
+        <img src="${image.url}" alt="${image.altText}" />
+        <figcaption>${image.caption} <span>${image.credit}</span></figcaption>
+      </figure>`
+    : "";
+  return `${figure}<p>${data.description}</p>`;
+}
+
+export function listTemplate(data, contentTemplate) {
+  const html = data.map(contentTemplate);
+  return `<ul>${html.join("")}</ul>`;
+}
+
+function vcAddressTemplate(data) {
+  return `<section class="vc-addresses__${data.type.toLowerCase()}">
+    <h3>${data.type} Address</h3>
+    <address>
+      ${data.line1}<br />
+      ${data.city}, ${data.stateCode} ${data.postalCode}
+    </address>
+  </section>`;
+}
+
+export function vcAddressesListTemplate(data) {
+  const physical = data.find((address) => address.type === "Physical");
+  const mailing = data.find((address) => address.type === "Mailing");
+  let html = physical ? vcAddressTemplate(physical) : "";
+  if (mailing) {
+    html += vcAddressTemplate(mailing);
+  }
+  return html || "<p>No address listed.</p>";
+}
+
+export function vcAmenityTemplate(data) {
+  return `<li>${data}</li>`;
+}
+
+export function vcDirectionsTemplate(data) {
+  return `<p>${data}</p>`;
+}
+
+export function vcContactsTemplate(data) {
+  const email = data.emailAddresses?.[0]?.emailAddress;
+  const phone = data.phoneNumbers?.[0]?.phoneNumber;
+  let html = "";
+  if (email) {
+    html += `<section class="vc-contact__email">
+      <h3>Email Address</h3>
+      <a href="mailto:${email}">Send this visitor center an email</a>
+    </section>`;
+  }
+  if (phone) {
+    html += `<section class="vc-contact__phone">
+      <h3>Phone numbers</h3>
+      <a href="tel:+1${phone.replace(/\D/g, "")}">${phone}</a>
+    </section>`;
+  }
+  return html || "<p>No contact information listed.</p>";
+}
+
+export function vcImageTemplate(data) {
+  return `<li><img src="${data.url}" alt="${data.altText}" loading="lazy" /></li>`;
+}
+
+// ---------- hours & seasons ----------
+
+const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+
+function capitalize(text) {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+function hoursTableTemplate(hours) {
+  const rows = days
+    .map((day) => `<tr><th scope="row">${capitalize(day)}</th><td>${hours[day] || "Closed"}</td></tr>`)
+    .join("");
+  return `<table class="vc-hours__table"><tbody>${rows}</tbody></table>`;
+}
+
+function formatDate(dateString) {
+  // add a time so the date isn't shifted a day back by the time zone
+  const date = new Date(`${dateString}T00:00:00`);
+  return date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+}
+
+function vcExceptionTemplate(exception) {
+  const dates =
+    exception.startDate === exception.endDate
+      ? formatDate(exception.startDate)
+      : `${formatDate(exception.startDate)} – ${formatDate(exception.endDate)}`;
+  return `<li>
+    <h4>${exception.name}</h4>
+    <p class="vc-hours__dates">${dates}</p>
+    ${hoursTableTemplate(exception.exceptionHours)}
+  </li>`;
+}
+
+function vcSeasonTemplate(season) {
+  const exceptions = season.exceptions?.length
+    ? `<h4 class="vc-hours__exceptions-title">Exceptions</h4>
+       ${listTemplate(season.exceptions, vcExceptionTemplate)}`
+    : "";
+  return `<section class="vc-hours__season">
+    <h3>${season.name}</h3>
+    ${season.description ? `<p>${season.description}</p>` : ""}
+    ${hoursTableTemplate(season.standardHours)}
+    ${exceptions}
+  </section>`;
+}
+
+export function vcHoursTemplate(operatingHours) {
+  if (!operatingHours?.length) return "<p>No hours listed.</p>";
+  return operatingHours.map(vcSeasonTemplate).join("");
 }

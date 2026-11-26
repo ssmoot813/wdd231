@@ -1,0 +1,196 @@
+/* visitor center page */
+
+.vc-name {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    border-bottom: 1px solid var(--bs-gray-400);
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+}
+
+.vc-name svg {
+    width: 1em;
+    height: 1em;
+    flex: 0 0 auto;
+}
+
+/* general info */
+.vc-info figure {
+    margin: 1em 0;
+}
+
+.vc-info img {
+    width: 100%;
+    height: auto;
+}
+
+.vc-info figcaption {
+    font-size: 0.8em;
+}
+
+.vc-info figcaption > span {
+    display: block;
+    font-size: 0.8em;
+    font-style: italic;
+}
+
+/* gallery */
+.vc-gallery > h2 {
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    font-size: 1.25rem;
+}
+
+.vc-gallery ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1em;
+}
+
+/* crop each image to a square */
+.vc-gallery img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+/* accordions */
+.vc-details-list {
+    margin: 2em 0;
+}
+
+.vc-details-list details {
+    border-top: 1px solid var(--bs-gray-400);
+    padding: 0 0.5rem;
+}
+
+.vc-details-list details:last-child {
+    border-bottom: 1px solid var(--bs-gray-400);
+}
+
+.vc-details-list svg,
+.vc-gallery svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 1rem;
+    fill: var(--bs-black);
+    flex: 0 0 auto;
+}
+
+.vc-details-list summary {
+    display: flex;
+    align-items: center;
+    padding: 1rem 2rem 1rem 0;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    list-style: none;
+}
+
+/* hide the default markers */
+.vc-details-list summary::marker,
+.vc-details-list summary::-webkit-details-marker {
+    display: none;
+}
+
+/* custom arrow marker on the right */
+.vc-details-list summary::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    background: url("https://byui-cse.github.io/wdd231-course/images/arrow.svg") no-repeat center / contain;
+    transition: transform 0.2s;
+}
+
+.vc-details-list details[open] > summary::after {
+    transform: rotate(180deg);
+}
+
+.vc-details-list details > :not(summary) {
+    margin-left: 2.25rem;
+}
+
+.vc-details-list details[open] {
+    padding-bottom: 1rem;
+}
+
+.vc-details-list h3 {
+    font-size: 1rem;
+    margin: 0.5em 0 0.25em;
+}
+
+.vc-details-list address {
+    font-style: normal;
+}
+
+#vc-amenities ul {
+    list-style: none;
+    padding: 0;
+}
+
+#vc-amenities li {
+    margin-bottom: 1em;
+}
+
+/* hours & seasons */
+.vc-hours__season + .vc-hours__season {
+    margin-top: 1.5em;
+}
+
+.vc-hours__table {
+    border-collapse: collapse;
+    margin: 0.5em 0;
+}
+
+.vc-hours__table th,
+.vc-hours__table td {
+    text-align: left;
+    padding: 0.2em 1.5em 0.2em 0;
+}
+
+.vc-hours__table th {
+    font-weight: normal;
+}
+
+#vc-hours ul {
+    list-style: none;
+    padding: 0;
+}
+
+#vc-hours li {
+    border-left: 3px solid var(--bs-gray-400);
+    padding-left: 0.75em;
+    margin-bottom: 1em;
+}
+
+#vc-hours h4 {
+    margin: 0.5em 0 0;
+}
+
+.vc-hours__dates {
+    margin: 0;
+    font-size: 0.9em;
+    font-style: italic;
+}
+
+@media (width >= 700px) {
+    .vc-info {
+        display: flex;
+        gap: 2em;
+        align-items: flex-start;
+    }
+
+    .vc-info figure {
+        flex: 0 0 45%;
+        margin: 0;
+    }
+}
